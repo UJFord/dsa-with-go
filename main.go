@@ -69,7 +69,16 @@ func CrystalBall(broke []bool) int {
 
 func BubbleSort(arr []int) []int {
 
-	for
+	for i := 0; i < len(arr)-1; i++ {
+		for j := 0; j < len(arr)-1-i; j++ {
 
-	return []int{}
+			if arr[j] > arr[j+1] {
+				n := arr[j]
+				arr[j] = arr[j+1]
+				arr[j+1] = n
+			}
+		}
+	}
+
+	return arr
 }
