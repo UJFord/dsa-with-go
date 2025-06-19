@@ -82,3 +82,46 @@ func BubbleSort(arr []int) []int {
 
 	return arr
 }
+
+type T struct {
+	prev  *T
+	value string
+	nxt   *T
+}
+
+type LinkedList interface {
+	length() int
+	insert_at(T, int)
+	remove(T) T
+	remove_at(int) T
+	append(T)
+	get(int) T
+}
+
+//
+// func DataSingly(linked_list T, list []string, index int) (T, int) {
+//
+// 	linked_list = T{}
+// 	linked_list.value = list[index]
+//
+// 	if linked_list.nxt.value == "" {
+// 		return linked_list, index
+// 	}
+//
+// 	index++
+//
+// 	return DataSingly(linked_list, list, index)
+// }
+
+func (itm *T) length() int {
+
+	if itm == nil {
+		return 0
+	}
+
+	if itm.value == "" {
+		return 0
+	}
+
+	return 1 + itm.nxt.length()
+}
