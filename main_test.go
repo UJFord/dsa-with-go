@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"slices"
 	"testing"
@@ -80,22 +79,18 @@ func TestBubbleSort(t *testing.T) {
 
 }
 
-func TestLinkedList(t *testing.T) {
-	// list := []string{"A", "B", "C", "D", "E", "F", "G", "H", "I"}
-	data := T{value: "A", nxt: &T{value: "B"}}
+// LinkedList
+var (
+	data = []string{"A", "B", "C", "D", "E"}
+)
 
-	t.Run("length", func(t *testing.T) {
+func TestGetLength(t *testing.T) {
+	linkedList := SinglyLinkedList{}
 
-		got := data.length()
-		want := 1
+	got := linkedList.GetLength()
+	want := 0
 
-		if got != want {
-			t.Errorf("got '%d' want '%d'", got, want)
-		}
-	})
-
-	t.Run("append", func(t *testing.T) {
-		new := T{value: "A", nxt: &T{value: "B"}}
-		fmt.Println(new)
-	})
+	if got != want {
+		t.Errorf("got '%d' want '%d'", got, want)
+	}
 }
