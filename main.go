@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -83,83 +84,28 @@ func BubbleSort(arr []int) []int {
 	return arr
 }
 
+var ViewLinkedList string
+
 type Node struct {
-	value string
+	value any
 	next  *Node
 }
 
-type SinglyLinkedList struct {
+type List struct {
 	length int
 	head   *Node
 }
 
-func (list SinglyLinkedList) GetLength(currentNode *Node) int {
+func (list List) GetLength() int {
 
 	if list.head == nil {
+		fmt.Println(ViewLinkedList)
 		return list.length
 	}
 
-	if list.head.next != nil {
-		return 1 + list.GetLength(list.head.next)
-	}
-
+	ViewLinkedList += fmt.Sprintf("%s ->", list.head.value)
 	list.length++
-	return list.length
-}
 
-func (list SinglyLinkedList) Prepend(item Node) {
-
-}
-
-// func (data SinglyLinkedList) Get(index int) string {
-//
-// 	if index < 0 {
-// 		fmt.Println("index < 0")
-// 		return ""
-// 	}
-//
-// 	if index > 0 {
-// 		fmt.Printf("index = %d; node = %s\n", index, data.currentNode.value)
-// 		index--
-// 		data.currentNode = *data.currentNode.next
-// 		return data.Get(index)
-// 	}
-//
-// 	if index == 0 {
-// 		return data.currentNode.value
-// 	}
-//
-// 	return ""
-// }
-
-// func (data SinglyLinkedList) Append(node Node) SinglyLinkedList {
-//
-// 	currentNode := data.head
-//
-// 	if currentNode.next != nil {
-// 		currentNode.next = &node
-// 	}
-//
-// 	l := func(l SinglyLinkedList){
-// 	}
-//
-// 	data.length++
-//
-// 	return data
-// }
-
-func main() {
-	// data := []string{"A", "B", "C", "D", "E"}
-	// linkedList := SinglyLinkedList{}
-	//
-	// for _, value := range data {
-	// 	node := node{value: value}
-	// 	linkedList = linkedList.Prepend(node)
-	// }
-	//
-	// got := linkedList.GetLength(linkedList.head)
-	//
-	// want := len(data)
-	//
-	// fmt.Printf("got '%d' want '%d'", got, want)
+	list = List{list.length, list.head.next}
+	return list.GetLength()
 }

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"slices"
 	"testing"
@@ -86,29 +85,27 @@ var (
 )
 
 func TestGetLength(t *testing.T) {
-	linkedList := SinglyLinkedList{head: &Node{"Hello", nil}}
 
-	got := linkedList.GetLength(linkedList.head)
-	want := 1
+	t.Run("no head", func(t *testing.T) {
+		list := List{}
 
-	if got != want {
-		t.Errorf("got '%d' want '%d'", got, want)
-	}
-}
+		got := list.GetLength()
+		want := 0
 
-func TestPrepend(t *testing.T) {
-	linkedList := SinglyLinkedList{}
+		if got != want {
+			t.Errorf("got '%d' want '%d'", got, want)
+		}
+	})
 
-	for _, item := range data {
-		newNode := Node{item, nil}
-		linkedList.Prepend(newNode)
-		fmt.Println(linkedList.GetLength(linkedList.head))
-	}
+	t.Run("1 node", func(t *testing.T) {
+		list := List{head: &Node{data[0], nil}}
 
-	got := linkedList.GetLength(linkedList.head)
-	want := 5
+		got := list.GetLength()
+		want := 1
 
-	if got != want {
-		t.Errorf("got '%d' want '%d'", got, want)
-	}
+		if got != want {
+			t.Errorf("got '%d' want '%d'", got, want)
+		}
+
+	})
 }
