@@ -84,8 +84,6 @@ func BubbleSort(arr []int) []int {
 	return arr
 }
 
-var ViewLinkedList string
-
 type Node struct {
 	value any
 	next  *Node
@@ -96,16 +94,33 @@ type List struct {
 	head   *Node
 }
 
-func (list List) GetLength() int {
+var ViewLinkedList string
 
-	if list.head == nil {
-		fmt.Println(ViewLinkedList)
-		return list.length
+func (list List) Display() {
+
+	currentNode := list.head
+
+	for list.length != 0 {
+		if list.length != 1 {
+			ViewLinkedList += fmt.Sprintf("%s -> ", currentNode.value)
+		} else {
+			ViewLinkedList += fmt.Sprintf("%s", currentNode.value)
+		}
+		list.length--
+		currentNode = currentNode.next
 	}
 
-	ViewLinkedList += fmt.Sprintf("%s ->", list.head.value)
-	list.length++
+	fmt.Println(ViewLinkedList)
+}
 
-	list = List{list.length, list.head.next}
-	return list.GetLength()
+func (list *List) GetLength() int {
+	return list.length
+}
+
+func (list *List) Prepend(value any) {
+	newHead := &Node{value: value}
+	secondNode := list.head
+	list.head = newHead
+	newHead.next = secondNode
+	list.length++
 }

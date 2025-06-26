@@ -98,7 +98,7 @@ func TestGetLength(t *testing.T) {
 	})
 
 	t.Run("1 node", func(t *testing.T) {
-		list := List{head: &Node{data[0], nil}}
+		list := List{1, &Node{data[0], nil}}
 
 		got := list.GetLength()
 		want := 1
@@ -108,4 +108,27 @@ func TestGetLength(t *testing.T) {
 		}
 
 	})
+}
+
+var list = List{}
+
+func TestPrepend(t *testing.T) {
+
+	for _, data := range data {
+		list.Prepend(data)
+	}
+
+	list.Display()
+
+	got := list.GetLength()
+	want := 5
+
+	if got != want {
+		t.Errorf("got '%d' want '%d'", got, want)
+	}
+}
+
+func TestAppend(t *testing.T) {
+
+	list.Append()
 }
