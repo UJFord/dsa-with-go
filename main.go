@@ -110,17 +110,74 @@ func (list List) Display() {
 		currentNode = currentNode.next
 	}
 
-	fmt.Println(ViewLinkedList)
+	fmt.Println(ViewLinkedList + "\n")
 }
 
 func (list *List) GetLength() int {
 	return list.length
 }
 
-func (list *List) Prepend(value any) {
-	newHead := &Node{value: value}
+func (list *List) Prepend(node *Node) {
+	newHead := node
 	secondNode := list.head
 	list.head = newHead
 	newHead.next = secondNode
 	list.length++
+}
+
+func (list *List) Append(node *Node) {
+
+	emptyList := list.head == nil
+	if emptyList {
+
+		list.head = node
+
+	} else {
+
+		currentNode := list.head
+
+		for currentNode.next != nil {
+			currentNode = currentNode.next
+		}
+
+		currentNode.next = node
+	}
+
+	list.length++
+}
+
+func (list *List) InsertAt(countdown int, node *Node) {
+
+	currentNode := list.head
+
+	for ; countdown > 0; countdown-- {
+
+		nextNode := currentNode.next
+
+		if countdown == 1 {
+			currentNode.next = node
+			node.next = nextNode
+		}
+
+		currentNode = nextNode
+	}
+
+	list.length++
+}
+
+func (list *List) RemoveHead() *Node {
+
+	currentHead := list.head
+	if currentHead != nil {
+
+		if list.head.next != nil {
+			list.head = list.head.next
+		} else {
+			list.head = nil
+		}
+
+		return list.head
+	}
+
+	return nil
 }

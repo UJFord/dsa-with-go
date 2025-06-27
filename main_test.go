@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
 	"slices"
 	"testing"
@@ -114,21 +115,44 @@ var list = List{}
 
 func TestPrepend(t *testing.T) {
 
-	for _, data := range data {
-		list.Prepend(data)
-	}
+	t.Run("prepend", func(t *testing.T) {
+		for _, data := range data {
+			list.Prepend(&Node{value: data})
+		}
 
-	list.Display()
+		// list.Display()
 
-	got := list.GetLength()
-	want := 5
+		got := list.GetLength()
+		want := 5
 
-	if got != want {
-		t.Errorf("got '%d' want '%d'", got, want)
-	}
+		if got != want {
+			t.Errorf("got '%d' want '%d'", got, want)
+		}
+	})
+
+	t.Run("append", func(t *testing.T) {
+		for _, data := range data {
+			list.Append(&Node{value: data})
+		}
+	})
+
+	t.Run("insertAt", func(t *testing.T) {
+		list.InsertAt(1, &Node{value: data[0]})
+	})
+
+	// list.Display()
+	// fmt.Println(list.GetLength())
 }
 
-func TestAppend(t *testing.T) {
+func TestRemove(t *testing.T) {
 
-	list.Append()
+	t.Run("remove head", func(t *testing.T) {
+		headNode := list.RemoveHead()
+		if headNode != nil {
+			fmt.Println(headNode.value)
+		}
+	})
+
+	list.Display()
+	fmt.Println(list.GetLength())
 }
