@@ -146,13 +146,25 @@ func TestPrepend(t *testing.T) {
 
 func TestRemove(t *testing.T) {
 
+	// list.Display()
 	t.Run("remove head", func(t *testing.T) {
-		headNode := list.RemoveHead()
-		if headNode != nil {
-			fmt.Println(headNode.value)
+
+		repeatCount := 5
+		for i := 0; i < repeatCount; i++ {
+			headNode := list.RemoveHead()
+			fmt.Printf("\nremoved head: %s\n", headNode.value)
 		}
 	})
 
-	list.Display()
-	fmt.Println(list.GetLength())
+	t.Run("remove tail", func(t *testing.T) {
+
+		repeatCount := 3
+		for i := 0; i < repeatCount; i++ {
+			tailNode := list.RemoveTail()
+			fmt.Printf("\nremoved tail: %s\n", tailNode.value)
+		}
+	})
+
+	fmt.Printf("\nList Items: %d\n", list.GetLength())
+	// list.Display()
 }

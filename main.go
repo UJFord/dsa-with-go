@@ -167,17 +167,26 @@ func (list *List) InsertAt(countdown int, node *Node) {
 
 func (list *List) RemoveHead() *Node {
 
-	currentHead := list.head
-	if currentHead != nil {
+	head := list.head
+	list.head = list.head.next
 
-		if list.head.next != nil {
-			list.head = list.head.next
-		} else {
-			list.head = nil
-		}
+	list.length--
 
-		return list.head
+	return head
+}
+
+func (list *List) RemoveTail() *Node {
+
+	var tail *Node
+
+	currentNode := list.head
+	for currentNode.next != nil {
+		currentNode = currentNode.next
 	}
 
-	return nil
+	tail = currentNode
+	currentNode = nil
+
+	list.length--
+	return tail
 }
