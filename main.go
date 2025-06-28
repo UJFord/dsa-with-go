@@ -87,33 +87,33 @@ func BubbleSort(arr []int) []int {
 type Node struct {
 	value any
 	next  *Node
+	prev  *Node
 }
 
 type SinglyLinkedList struct {
 	length int
 	head   *Node
+	tail   *Node
 }
 
-func (list SinglyLinkedList) Display() {
+func (list *SinglyLinkedList) Display() {
 
 	var ViewLinkedSinglyLinkedList string
 	currentNode := list.head
 
-	for list.length != 0 {
-		if list.length != 1 {
+	countdown := list.length
+	for countdown != 0 {
+		if countdown != 1 {
 			ViewLinkedSinglyLinkedList += fmt.Sprintf("%s -> ", currentNode.value)
 		} else {
 			ViewLinkedSinglyLinkedList += fmt.Sprintf("%s", currentNode.value)
 		}
-		list.length--
+		countdown--
 		currentNode = currentNode.next
 	}
 
 	fmt.Println("\n===================\nList Items: " + ViewLinkedSinglyLinkedList)
-}
-
-func (list *SinglyLinkedList) GetLength() int {
-	return list.length
+	fmt.Printf("List Count: %d\n===================\n", list.length)
 }
 
 func (list *SinglyLinkedList) Prepend(node *Node) {
@@ -248,4 +248,38 @@ func (list *SinglyLinkedList) Get(countdown int) *Node {
 	}
 
 	return currentNode
+}
+
+func (queue *SinglyLinkedList) Enqueue(value *Node) {
+
+	if queue.head == nil {
+		queue.head = value
+		queue.tail = value
+	} else {
+		queue.tail.next = value
+		queue.tail = value
+	}
+
+	queue.length++
+}
+
+func (queue *SinglyLinkedList) Deque() *Node {
+
+	if queue.head != nil {
+		head := queue.head
+		queue.head = queue.head.next
+		queue.length--
+
+		return head
+	}
+
+	return nil
+}
+
+func (queue *SinglyLinkedList) Peek() *Node {
+	if queue.head != nil {
+		return queue.head
+	}
+
+	return nil
 }

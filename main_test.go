@@ -85,13 +85,16 @@ var (
 	data = []string{"A", "B", "C", "D", "E"}
 )
 
+var list = SinglyLinkedList{}
+var currentListLength int
+
 func TestGetLength(t *testing.T) {
 
 	t.Run("no head", func(t *testing.T) {
 		list := SinglyLinkedList{}
 
-		got := list.GetLength()
-		want := 0
+		got := list.length
+		want := currentListLength
 
 		if got != want {
 			t.Errorf("got '%d' want '%d'", got, want)
@@ -101,10 +104,13 @@ func TestGetLength(t *testing.T) {
 	t.Run("1 node", func(t *testing.T) {
 
 		head := &Node{value: data[0]}
-		list := SinglyLinkedList{1, head}
+		tail := &Node{}
+		list = SinglyLinkedList{1, head, tail}
 
-		got := list.GetLength()
-		want := 1
+		currentListLength += 1
+
+		got := list.length
+		want := currentListLength
 
 		if got != want {
 			t.Errorf("got '%d' want '%d'", got, want)
@@ -113,19 +119,16 @@ func TestGetLength(t *testing.T) {
 	})
 }
 
-var list = SinglyLinkedList{}
-
 func TestPrepend(t *testing.T) {
 
 	t.Run("prepend", func(t *testing.T) {
 		for _, data := range data {
 			list.Prepend(&Node{value: data})
 		}
+		currentListLength += len(data)
 
-		// list.Display()
-
-		got := list.GetLength()
-		want := 5
+		got := list.length
+		want := currentListLength
 
 		if got != want {
 			t.Errorf("got '%d' want '%d'", got, want)
@@ -136,13 +139,27 @@ func TestPrepend(t *testing.T) {
 		for _, data := range data {
 			list.Append(&Node{value: data})
 		}
+		currentListLength += len(data)
+
+		got := list.length
+		want := currentListLength
+
+		if got != want {
+			t.Errorf("got '%d' want '%d'", got, want)
+		}
 	})
 
 	t.Run("insertAt", func(t *testing.T) {
 		list.InsertAt(1, &Node{value: data[0]})
-	})
+		currentListLength += 1
 
-	display()
+		got := list.length
+		want := currentListLength
+
+		if got != want {
+			t.Errorf("got '%d' want '%d'", got, want)
+		}
+	})
 }
 
 func TestRemove(t *testing.T) {
@@ -151,33 +168,51 @@ func TestRemove(t *testing.T) {
 
 		repeatCount := 5
 		for i := 0; i < repeatCount; i++ {
-			headNode := list.RemoveHead()
-			fmt.Printf("\nremoved head: %s\n", headNode.value)
+			list.RemoveHead()
+		}
+		currentListLength -= repeatCount
+
+		got := list.length
+		want := currentListLength
+
+		if got != want {
+			t.Errorf("got '%d' want '%d'", got, want)
 		}
 	})
-
-	display()
 
 	t.Run("remove tail", func(t *testing.T) {
 
 		repeatCount := 2
 		for i := 0; i < repeatCount; i++ {
-			tailNode := list.RemoveTail()
-			fmt.Printf("\nremoved tail: %s\n", tailNode.value)
+			list.RemoveTail()
+		}
+		currentListLength -= repeatCount
+
+		got := list.length
+		want := currentListLength
+
+		if got != want {
+			t.Errorf("got '%d' want '%d'", got, want)
 		}
 	})
 
-	display()
-
 	t.Run("removeAt", func(t *testing.T) {
 		list.RemoveAt(1)
+		currentListLength -= 1
+
+		got := list.length
+		want := currentListLength
+
+		if got != want {
+			t.Errorf("got '%d' want '%d'", got, want)
+		}
 	})
 
-	display()
+	list.Display()
 }
 
 func TestGet(t *testing.T) {
-	got := list.Get(1)
+	got := list.Get(2)
 	want := "B"
 
 	if got.value != want {
@@ -185,7 +220,42 @@ func TestGet(t *testing.T) {
 	}
 }
 
-func display() {
-	list.Display()
-	fmt.Printf("List Count: %d\n===================\n", list.GetLength())
+var queue = SinglyLinkedList{length: 0}
+
+func TestEnqueue(t *testing.T) {
+	for _, data := range data {
+		queue.Enqueue(&Node{value: data})
+	}
+
+	queue.Display()
+
+	got := queue.length
+	want := 5
+
+	if got != want {
+		t.Errorf("got '%d' want '%d'", got, want)
+	}
+}
+
+func TestDeque(t *testing.T) {
+	for range data {
+		dequed := queue.Deque()
+		fmt.Printf("dequed: %s\n", dequed.value)
+		queue.Display()
+	}
+
+	got := queue.length
+	want := 0
+	if got != want {
+		t.Errorf("got '%d' want '%d'", got, want)
+	}
+}
+
+func TestPeek(t *testing.T) {
+
+	peekVal := queue.Peek()
+
+	if peekVal != nil {
+		fmt.Println(peekVal.value)
+	}
 }
