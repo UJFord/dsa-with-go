@@ -140,13 +140,11 @@ func TestPrepend(t *testing.T) {
 		list.InsertAt(1, &Node{value: data[0]})
 	})
 
-	// list.Display()
-	// fmt.Println(list.GetLength())
+	display()
 }
 
 func TestRemove(t *testing.T) {
 
-	// list.Display()
 	t.Run("remove head", func(t *testing.T) {
 
 		repeatCount := 5
@@ -156,15 +154,36 @@ func TestRemove(t *testing.T) {
 		}
 	})
 
+	display()
+
 	t.Run("remove tail", func(t *testing.T) {
 
-		repeatCount := 3
+		repeatCount := 2
 		for i := 0; i < repeatCount; i++ {
 			tailNode := list.RemoveTail()
 			fmt.Printf("\nremoved tail: %s\n", tailNode.value)
 		}
 	})
 
-	fmt.Printf("\nList Items: %d\n", list.GetLength())
-	// list.Display()
+	display()
+
+	t.Run("removeAt", func(t *testing.T) {
+		list.RemoveAt(1)
+	})
+
+	display()
+}
+
+func TestGet(t *testing.T) {
+	got := list.Get(1)
+	want := "B"
+
+	if got.value != want {
+		t.Errorf("got %q want %q", got.value, want)
+	}
+}
+
+func display() {
+	list.Display()
+	fmt.Printf("List Count: %d\n===================\n", list.GetLength())
 }

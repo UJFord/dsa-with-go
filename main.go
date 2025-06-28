@@ -94,10 +94,9 @@ type List struct {
 	head   *Node
 }
 
-var ViewLinkedList string
-
 func (list List) Display() {
 
+	var ViewLinkedList string
 	currentNode := list.head
 
 	for list.length != 0 {
@@ -110,7 +109,7 @@ func (list List) Display() {
 		currentNode = currentNode.next
 	}
 
-	fmt.Println(ViewLinkedList + "\n")
+	fmt.Println("\n===================\nList Items: " + ViewLinkedList)
 }
 
 func (list *List) GetLength() int {
@@ -165,6 +164,40 @@ func (list *List) InsertAt(countdown int, node *Node) {
 	list.length++
 }
 
+func (list *List) RemoveAt(countdown int) *Node {
+
+	var removed *Node
+
+	if list.head == nil {
+		return nil
+	}
+
+	removeFirstNode := countdown == 0
+	if removeFirstNode {
+		removed = list.head
+		list.head = list.head.next
+		list.length--
+		return removed
+	}
+
+	currentNode := list.head
+	for ; countdown > 0; countdown-- {
+
+		nextNode := currentNode.next
+
+		if countdown == 1 {
+			removed = nextNode
+			currentNode.next = currentNode.next.next
+		}
+
+		currentNode = nextNode
+	}
+
+	list.length--
+
+	return removed
+}
+
 func (list *List) RemoveHead() *Node {
 
 	head := list.head
@@ -177,16 +210,42 @@ func (list *List) RemoveHead() *Node {
 
 func (list *List) RemoveTail() *Node {
 
-	var tail *Node
+	var removed *Node
+
+	if list.head == nil {
+		return nil
+	}
+
+	if list.head.next == nil {
+		removed = list.head
+		list.head = nil
+		list.length--
+		return removed
+	}
 
 	currentNode := list.head
-	for currentNode.next != nil {
+	for currentNode.next.next != nil {
 		currentNode = currentNode.next
 	}
 
-	tail = currentNode
-	currentNode = nil
+	removed = currentNode.next
+	currentNode.next = nil
 
 	list.length--
-	return tail
+	return removed
+}
+
+func (list *List) Get(countdown int) *Node {
+
+	currentNode := list.head
+
+	for ; countdown > -1; countdown-- {
+		if countdown == 0 {
+			return currentNode
+		}
+
+		currentNode = currentNode.next
+	}
+
+	return currentNode
 }
