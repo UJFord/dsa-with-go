@@ -85,40 +85,38 @@ func BubbleSort(arr []int) []int {
 }
 
 type Node struct {
-	prev  *Node
 	value any
 	next  *Node
 }
 
-type List struct {
+type SinglyLinkedList struct {
 	length int
 	head   *Node
-	tail   *Node
 }
 
-func (list List) Display() {
+func (list SinglyLinkedList) Display() {
 
-	var ViewLinkedList string
+	var ViewLinkedSinglyLinkedList string
 	currentNode := list.head
 
 	for list.length != 0 {
 		if list.length != 1 {
-			ViewLinkedList += fmt.Sprintf("%s -> ", currentNode.value)
+			ViewLinkedSinglyLinkedList += fmt.Sprintf("%s -> ", currentNode.value)
 		} else {
-			ViewLinkedList += fmt.Sprintf("%s", currentNode.value)
+			ViewLinkedSinglyLinkedList += fmt.Sprintf("%s", currentNode.value)
 		}
 		list.length--
 		currentNode = currentNode.next
 	}
 
-	fmt.Println("\n===================\nList Items: " + ViewLinkedList)
+	fmt.Println("\n===================\nList Items: " + ViewLinkedSinglyLinkedList)
 }
 
-func (list *List) GetLength() int {
+func (list *SinglyLinkedList) GetLength() int {
 	return list.length
 }
 
-func (list *List) Prepend(node *Node) {
+func (list *SinglyLinkedList) Prepend(node *Node) {
 	newHead := node
 	secondNode := list.head
 	list.head = newHead
@@ -126,10 +124,10 @@ func (list *List) Prepend(node *Node) {
 	list.length++
 }
 
-func (list *List) Append(node *Node) {
+func (list *SinglyLinkedList) Append(node *Node) {
 
-	emptyList := list.head == nil
-	if emptyList {
+	emptySinglyLinkedList := list.head == nil
+	if emptySinglyLinkedList {
 
 		list.head = node
 
@@ -147,7 +145,7 @@ func (list *List) Append(node *Node) {
 	list.length++
 }
 
-func (list *List) InsertAt(countdown int, node *Node) {
+func (list *SinglyLinkedList) InsertAt(countdown int, node *Node) {
 
 	currentNode := list.head
 
@@ -166,7 +164,7 @@ func (list *List) InsertAt(countdown int, node *Node) {
 	list.length++
 }
 
-func (list *List) RemoveAt(countdown int) *Node {
+func (list *SinglyLinkedList) RemoveAt(countdown int) *Node {
 
 	var removed *Node
 
@@ -200,7 +198,7 @@ func (list *List) RemoveAt(countdown int) *Node {
 	return removed
 }
 
-func (list *List) RemoveHead() *Node {
+func (list *SinglyLinkedList) RemoveHead() *Node {
 
 	head := list.head
 	list.head = list.head.next
@@ -210,7 +208,7 @@ func (list *List) RemoveHead() *Node {
 	return head
 }
 
-func (list *List) RemoveTail() *Node {
+func (list *SinglyLinkedList) RemoveTail() *Node {
 
 	var removed *Node
 
@@ -237,7 +235,7 @@ func (list *List) RemoveTail() *Node {
 	return removed
 }
 
-func (list *List) Get(countdown int) *Node {
+func (list *SinglyLinkedList) Get(countdown int) *Node {
 
 	currentNode := list.head
 

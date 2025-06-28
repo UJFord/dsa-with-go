@@ -80,7 +80,7 @@ func TestBubbleSort(t *testing.T) {
 
 }
 
-// LinkedList
+// LinkedSinglyLinkedList
 var (
 	data = []string{"A", "B", "C", "D", "E"}
 )
@@ -88,7 +88,7 @@ var (
 func TestGetLength(t *testing.T) {
 
 	t.Run("no head", func(t *testing.T) {
-		list := List{}
+		list := SinglyLinkedList{}
 
 		got := list.GetLength()
 		want := 0
@@ -101,8 +101,7 @@ func TestGetLength(t *testing.T) {
 	t.Run("1 node", func(t *testing.T) {
 
 		head := &Node{value: data[0]}
-		var tail *Node
-		list := List{1, head, tail}
+		list := SinglyLinkedList{1, head}
 
 		got := list.GetLength()
 		want := 1
@@ -114,7 +113,7 @@ func TestGetLength(t *testing.T) {
 	})
 }
 
-var list = List{}
+var list = SinglyLinkedList{}
 
 func TestPrepend(t *testing.T) {
 
