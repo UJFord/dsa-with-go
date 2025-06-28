@@ -99,7 +99,10 @@ func TestGetLength(t *testing.T) {
 	})
 
 	t.Run("1 node", func(t *testing.T) {
-		list := List{1, &Node{data[0], nil}}
+
+		head := &Node{value: data[0]}
+		var tail *Node
+		list := List{1, head, tail}
 
 		got := list.GetLength()
 		want := 1

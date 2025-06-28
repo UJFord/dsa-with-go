@@ -85,6 +85,7 @@ func BubbleSort(arr []int) []int {
 }
 
 type Node struct {
+	prev  *Node
 	value any
 	next  *Node
 }
@@ -92,6 +93,7 @@ type Node struct {
 type List struct {
 	length int
 	head   *Node
+	tail   *Node
 }
 
 func (list List) Display() {
