@@ -96,50 +96,53 @@ type SinglyLinkedList struct {
 	tail   *Node
 }
 
-func (list *SinglyLinkedList) Display() {
+func (list *SinglyLinkedList) Display() string {
 
 	var ViewLinkedSinglyLinkedList string
+	if list.head == nil {
+		return "empty"
+	}
+
 	currentNode := list.head
 
 	countdown := list.length
-	for countdown != 0 {
-		if countdown != 1 {
+	for countdown > 0 {
+		if countdown > 1 {
 			ViewLinkedSinglyLinkedList += fmt.Sprintf("%s -> ", currentNode.value)
 		} else {
 			ViewLinkedSinglyLinkedList += fmt.Sprintf("%s", currentNode.value)
 		}
-		countdown--
 		currentNode = currentNode.next
+		countdown--
 	}
 
-	fmt.Println("\n===================\nList Items: " + ViewLinkedSinglyLinkedList)
-	fmt.Printf("List Count: %d\n===================\n", list.length)
+	fmt.Println("===================\nList Items: " + ViewLinkedSinglyLinkedList)
+	fmt.Printf("List Count: %d\n===================\n\n", list.length)
+
+	return ViewLinkedSinglyLinkedList
 }
 
 func (list *SinglyLinkedList) Prepend(node *Node) {
-	newHead := node
-	secondNode := list.head
-	list.head = newHead
-	newHead.next = secondNode
+
+	if list.head == nil {
+		list.head = node
+		list.tail = node
+	} else {
+		node.next = list.head
+		list.head = node
+	}
+
 	list.length++
 }
 
 func (list *SinglyLinkedList) Append(node *Node) {
 
-	emptySinglyLinkedList := list.head == nil
-	if emptySinglyLinkedList {
-
+	if list.head == nil {
 		list.head = node
-
+		list.tail = node
 	} else {
-
-		currentNode := list.head
-
-		for currentNode.next != nil {
-			currentNode = currentNode.next
-		}
-
-		currentNode.next = node
+		list.tail.next = node
+		list.tail = node
 	}
 
 	list.length++
@@ -147,18 +150,28 @@ func (list *SinglyLinkedList) Append(node *Node) {
 
 func (list *SinglyLinkedList) InsertAt(countdown int, node *Node) {
 
-	currentNode := list.head
+	if countdown == 0 {
 
-	for ; countdown > 0; countdown-- {
+		node.next = list.head
+		list.head = node
 
+	} else {
+
+		currentNode := list.head
 		nextNode := currentNode.next
 
-		if countdown == 1 {
-			currentNode.next = node
-			node.next = nextNode
-		}
+		for ; countdown > 0; countdown-- {
 
-		currentNode = nextNode
+			if countdown > 1 {
+
+				currentNode = nextNode
+
+			} else if countdown == 1 {
+
+				currentNode.next = node
+				node.next = nextNode
+			}
+		}
 	}
 
 	list.length++
@@ -200,12 +213,15 @@ func (list *SinglyLinkedList) RemoveAt(countdown int) *Node {
 
 func (list *SinglyLinkedList) RemoveHead() *Node {
 
-	head := list.head
-	list.head = list.head.next
+	if list.head != nil {
+		head := list.head
+		list.head = list.head.next
+		list.length--
 
-	list.length--
+		return head
+	}
 
-	return head
+	return nil
 }
 
 func (list *SinglyLinkedList) RemoveTail() *Node {

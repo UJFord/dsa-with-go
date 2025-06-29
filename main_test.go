@@ -80,44 +80,8 @@ func TestBubbleSort(t *testing.T) {
 
 }
 
-// LinkedSinglyLinkedList
-var (
-	data = []string{"A", "B", "C", "D", "E"}
-)
-
 var list = SinglyLinkedList{}
-var currentListLength int
-
-func TestGetLength(t *testing.T) {
-
-	t.Run("no head", func(t *testing.T) {
-		list := SinglyLinkedList{}
-
-		got := list.length
-		want := currentListLength
-
-		if got != want {
-			t.Errorf("got '%d' want '%d'", got, want)
-		}
-	})
-
-	t.Run("1 node", func(t *testing.T) {
-
-		head := &Node{value: data[0]}
-		tail := &Node{}
-		list = SinglyLinkedList{1, head, tail}
-
-		currentListLength += 1
-
-		got := list.length
-		want := currentListLength
-
-		if got != want {
-			t.Errorf("got '%d' want '%d'", got, want)
-		}
-
-	})
-}
+var data = []string{"A", "B", "C", "D", "E"}
 
 func TestPrepend(t *testing.T) {
 
@@ -125,13 +89,12 @@ func TestPrepend(t *testing.T) {
 		for _, data := range data {
 			list.Prepend(&Node{value: data})
 		}
-		currentListLength += len(data)
 
-		got := list.length
-		want := currentListLength
+		got := list.Display()
+		want := "E -> D -> C -> B -> A"
 
 		if got != want {
-			t.Errorf("got '%d' want '%d'", got, want)
+			t.Errorf("got '%q' want '%q'", got, want)
 		}
 	})
 
@@ -139,25 +102,23 @@ func TestPrepend(t *testing.T) {
 		for _, data := range data {
 			list.Append(&Node{value: data})
 		}
-		currentListLength += len(data)
 
-		got := list.length
-		want := currentListLength
+		got := list.Display()
+		want := "E -> D -> C -> B -> A -> A -> B -> C -> D -> E"
 
 		if got != want {
-			t.Errorf("got '%d' want '%d'", got, want)
+			t.Errorf("got '%q' want '%q'", got, want)
 		}
 	})
 
 	t.Run("insertAt", func(t *testing.T) {
-		list.InsertAt(1, &Node{value: data[0]})
-		currentListLength += 1
+		list.InsertAt(0, &Node{value: data[0]})
 
-		got := list.length
-		want := currentListLength
+		got := list.Display()
+		want := "E -> A -> D -> C -> B -> A -> A -> B -> C -> D -> E"
 
 		if got != want {
-			t.Errorf("got '%d' want '%d'", got, want)
+			t.Errorf("got '%q' want '%q'", got, want)
 		}
 	})
 }
@@ -165,55 +126,48 @@ func TestPrepend(t *testing.T) {
 func TestRemove(t *testing.T) {
 
 	t.Run("remove head", func(t *testing.T) {
-
 		repeatCount := 5
-		for i := 0; i < repeatCount; i++ {
+		for range repeatCount {
 			list.RemoveHead()
 		}
-		currentListLength -= repeatCount
 
-		got := list.length
-		want := currentListLength
+		got := list.Display()
+		want := "A -> A -> B -> C -> D -> E"
 
 		if got != want {
-			t.Errorf("got '%d' want '%d'", got, want)
+			t.Errorf("got '%q' want '%q'", got, want)
 		}
 	})
 
 	t.Run("remove tail", func(t *testing.T) {
-
 		repeatCount := 2
 		for i := 0; i < repeatCount; i++ {
 			list.RemoveTail()
 		}
-		currentListLength -= repeatCount
 
-		got := list.length
-		want := currentListLength
+		got := list.Display()
+		want := "A -> A -> B -> C"
 
 		if got != want {
-			t.Errorf("got '%d' want '%d'", got, want)
+			t.Errorf("got '%q' want '%q'", got, want)
 		}
 	})
 
 	t.Run("removeAt", func(t *testing.T) {
 		list.RemoveAt(1)
-		currentListLength -= 1
 
-		got := list.length
-		want := currentListLength
+		got := list.Display()
+		want := "A -> B -> C"
 
 		if got != want {
-			t.Errorf("got '%d' want '%d'", got, want)
+			t.Errorf("got '%q' want '%q'", got, want)
 		}
 	})
-
-	list.Display()
 }
 
 func TestGet(t *testing.T) {
 	got := list.Get(2)
-	want := "B"
+	want := "C"
 
 	if got.value != want {
 		t.Errorf("got %q want %q", got.value, want)
@@ -227,35 +181,36 @@ func TestEnqueue(t *testing.T) {
 		queue.Enqueue(&Node{value: data})
 	}
 
-	queue.Display()
-
-	got := queue.length
-	want := 5
+	got := queue.Display()
+	want := "A -> B -> C -> D -> E"
 
 	if got != want {
-		t.Errorf("got '%d' want '%d'", got, want)
+		t.Errorf("got %q want %q", got, want)
 	}
 }
 
 func TestDeque(t *testing.T) {
-	for range data {
-		dequed := queue.Deque()
-		fmt.Printf("dequed: %s\n", dequed.value)
-		queue.Display()
-	}
+	queue.Deque()
 
-	got := queue.length
-	want := 0
+	got := queue.Display()
+	want := "B -> C -> D -> E"
+
 	if got != want {
-		t.Errorf("got '%d' want '%d'", got, want)
+		t.Errorf("got %q want '%q", got, want)
 	}
 }
 
 func TestPeek(t *testing.T) {
 
-	peekVal := queue.Peek()
+	got := queue.Peek()
+	want := "B"
 
-	if peekVal != nil {
-		fmt.Println(peekVal.value)
+	fmt.Printf("Peeking Queue Result: %v\n\n", got.value)
+	if got.value != want {
+		t.Errorf("got %v want '%q", got, want)
 	}
 }
+
+var stack = SinglyLinkedList{}
+
+// func Test()
