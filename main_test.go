@@ -112,7 +112,7 @@ func TestPrepend(t *testing.T) {
 	})
 
 	t.Run("insertAt", func(t *testing.T) {
-		list.InsertAt(0, &Node{value: data[0]})
+		list.InsertAt(1, &Node{value: data[0]})
 
 		got := list.Display()
 		want := "E -> A -> D -> C -> B -> A -> A -> B -> C -> D -> E"
@@ -141,7 +141,7 @@ func TestRemove(t *testing.T) {
 
 	t.Run("remove tail", func(t *testing.T) {
 		repeatCount := 2
-		for i := 0; i < repeatCount; i++ {
+		for range repeatCount {
 			list.RemoveTail()
 		}
 
@@ -174,7 +174,7 @@ func TestGet(t *testing.T) {
 	}
 }
 
-var queue = SinglyLinkedList{length: 0}
+var queue = Queue{}
 
 func TestEnqueue(t *testing.T) {
 	for _, data := range data {
@@ -200,7 +200,7 @@ func TestDeque(t *testing.T) {
 	}
 }
 
-func TestPeek(t *testing.T) {
+func TestQueuePeek(t *testing.T) {
 
 	got := queue.Peek()
 	want := "B"
@@ -211,6 +211,42 @@ func TestPeek(t *testing.T) {
 	}
 }
 
-var stack = SinglyLinkedList{}
+var stack = Stack{}
 
-// func Test()
+func TestPush(t *testing.T) {
+	for _, data := range data {
+		stack.Push(&Node{value: data})
+	}
+
+	got := stack.Display()
+	want := "A <- B <- C <- D <- E"
+
+	if got != want {
+		t.Errorf("got %q want %q", got, want)
+	}
+}
+
+func TestPop(t *testing.T) {
+
+	repeatCount := 3
+	for range repeatCount {
+		stack.Pop()
+	}
+
+	got := stack.Display()
+	want := "A <- B"
+
+	if got != want {
+		t.Errorf("got %q want %q", got, want)
+	}
+}
+
+func TestStackPeek(t *testing.T) {
+	got := stack.Peek()
+	want := "B"
+
+	fmt.Printf("Peeking Queue Result: %v\n\n", got.value)
+	if got.value != want {
+		t.Errorf("got %v want %q", got, want)
+	}
+}

@@ -151,23 +151,16 @@ func (list *SinglyLinkedList) Append(node *Node) {
 func (list *SinglyLinkedList) InsertAt(countdown int, node *Node) {
 
 	if countdown == 0 {
-
 		node.next = list.head
 		list.head = node
-
 	} else {
-
 		currentNode := list.head
 		nextNode := currentNode.next
 
 		for ; countdown > 0; countdown-- {
-
 			if countdown > 1 {
-
 				currentNode = nextNode
-
 			} else if countdown == 1 {
-
 				currentNode.next = node
 				node.next = nextNode
 			}
@@ -266,7 +259,13 @@ func (list *SinglyLinkedList) Get(countdown int) *Node {
 	return currentNode
 }
 
-func (queue *SinglyLinkedList) Enqueue(value *Node) {
+type Queue struct {
+	length int
+	head   *Node
+	tail   *Node
+}
+
+func (queue *Queue) Enqueue(value *Node) {
 
 	if queue.head == nil {
 		queue.head = value
@@ -279,7 +278,7 @@ func (queue *SinglyLinkedList) Enqueue(value *Node) {
 	queue.length++
 }
 
-func (queue *SinglyLinkedList) Deque() *Node {
+func (queue *Queue) Deque() *Node {
 
 	if queue.head != nil {
 		head := queue.head
@@ -292,10 +291,107 @@ func (queue *SinglyLinkedList) Deque() *Node {
 	return nil
 }
 
-func (queue *SinglyLinkedList) Peek() *Node {
+func (queue *Queue) Peek() *Node {
 	if queue.head != nil {
 		return queue.head
 	}
 
 	return nil
+}
+
+func (queue *Queue) Display() string {
+
+	var ViewLinkedSinglyLinkedList string
+	if queue.head == nil {
+		return "empty"
+	}
+
+	currentNode := queue.head
+
+	countdown := queue.length
+	for countdown > 0 {
+		if countdown > 1 {
+			ViewLinkedSinglyLinkedList += fmt.Sprintf("%s -> ", currentNode.value)
+		} else {
+			ViewLinkedSinglyLinkedList += fmt.Sprintf("%s", currentNode.value)
+		}
+		currentNode = currentNode.next
+		countdown--
+	}
+
+	fmt.Println("===================\nList Items: " + ViewLinkedSinglyLinkedList)
+	fmt.Printf("List Count: %d\n===================\n\n", queue.length)
+
+	return ViewLinkedSinglyLinkedList
+}
+
+type Stack struct {
+	length int
+	head   *Node
+	tail   *Node
+}
+
+func (stack *Stack) Display() string {
+
+	var ViewLinkedSinglyLinkedList string
+	if stack.head == nil {
+		return "empty"
+	}
+
+	currentNode := stack.head
+
+	countdown := stack.length
+	for countdown > 0 {
+		if countdown == stack.length {
+			ViewLinkedSinglyLinkedList = fmt.Sprintf("%s", currentNode.value) + ViewLinkedSinglyLinkedList
+		} else {
+			ViewLinkedSinglyLinkedList = fmt.Sprintf("%s <- ", currentNode.value) + ViewLinkedSinglyLinkedList
+		}
+		currentNode = currentNode.next
+		countdown--
+	}
+
+	fmt.Println("===================\nList Items: " + ViewLinkedSinglyLinkedList)
+	fmt.Printf("List Count: %d\n===================\n\n", stack.length)
+
+	return ViewLinkedSinglyLinkedList
+}
+
+func (stack *Stack) Push(node *Node) {
+
+	if stack.head == nil {
+		stack.head = node
+		stack.tail = node
+	} else {
+		node.next = stack.head
+		stack.head = node
+	}
+
+	stack.length++
+}
+
+func (stack *Stack) Pop() *Node {
+
+	if stack.head == nil {
+		return nil
+	}
+
+	popped := stack.head
+	if stack.head.next == nil {
+		stack.head = nil
+		stack.tail = nil
+	} else {
+		stack.head = stack.head.next
+	}
+
+	stack.length--
+	return popped
+}
+
+func (stack *Stack) Peek() *Node {
+	if stack.head == nil {
+		return nil
+	}
+
+	return stack.head
 }
