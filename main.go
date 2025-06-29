@@ -361,7 +361,6 @@ func (stack *Stack) Push(node *Node) {
 
 	if stack.head == nil {
 		stack.head = node
-		stack.tail = node
 	} else {
 		node.prev = stack.head
 		stack.head = node
@@ -379,7 +378,6 @@ func (stack *Stack) Pop() *Node {
 	popped := stack.head
 	if stack.head.prev == nil {
 		stack.head = nil
-		stack.tail = nil
 	} else {
 		stack.head = stack.head.prev
 	}
