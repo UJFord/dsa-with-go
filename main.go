@@ -347,7 +347,7 @@ func (stack *Stack) Display() string {
 		} else {
 			ViewLinkedSinglyLinkedList = fmt.Sprintf("%s <- ", currentNode.value) + ViewLinkedSinglyLinkedList
 		}
-		currentNode = currentNode.next
+		currentNode = currentNode.prev
 		countdown--
 	}
 
@@ -363,7 +363,7 @@ func (stack *Stack) Push(node *Node) {
 		stack.head = node
 		stack.tail = node
 	} else {
-		node.next = stack.head
+		node.prev = stack.head
 		stack.head = node
 	}
 
@@ -377,11 +377,11 @@ func (stack *Stack) Pop() *Node {
 	}
 
 	popped := stack.head
-	if stack.head.next == nil {
+	if stack.head.prev == nil {
 		stack.head = nil
 		stack.tail = nil
 	} else {
-		stack.head = stack.head.next
+		stack.head = stack.head.prev
 	}
 
 	stack.length--
