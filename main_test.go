@@ -250,3 +250,48 @@ func TestStackPeek(t *testing.T) {
 		t.Errorf("got %v want %q", got, want)
 	}
 }
+
+// ArrayList
+var al = ArrayList{}
+
+func TestArrayListGet(t *testing.T) {
+
+	for i, data := range data {
+		al.arr[i] = data
+		al.len++
+	}
+
+	al.Display()
+
+	got := al.Get(3)
+	want := "D"
+
+	if got != want {
+		t.Errorf("got %q want %q", got, want)
+	}
+}
+
+func TestArrayListDeleteHead(t *testing.T) {
+	got := al.DeleteHead()
+	want := "A"
+
+	al.Display()
+
+	if got != want {
+		t.Errorf("got %q want %q", got, want)
+	}
+}
+
+func TestArrayListInsertHead(t *testing.T) {
+
+	al.InsertHead("A")
+
+	got := al.arr
+	want := [5]string{"A", "B", "C", "D", "E"}
+
+	al.Display()
+
+	if got != want {
+		t.Errorf("got %q want %q", got, want)
+	}
+}

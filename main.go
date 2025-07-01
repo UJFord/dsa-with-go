@@ -393,3 +393,57 @@ func (stack *Stack) Peek() *Node {
 
 	return stack.head
 }
+
+type ArrayList struct {
+	arr [5]string
+	len int
+}
+
+func (al *ArrayList) Display() {
+	fmt.Printf("\n==================\nArrayList: %v", al.arr)
+	fmt.Printf("\nLength: %d\n==================\n", al.len)
+}
+
+func (al *ArrayList) Get(index int) string {
+	return al.arr[index]
+}
+
+func (al *ArrayList) DeleteHead() string {
+
+	if al.len == 0 {
+		return ""
+	}
+
+	deleted := al.arr[0]
+
+	for i := 0; i < al.len-1; i++ {
+		al.arr[i] = al.arr[i+1]
+	}
+
+	al.len--
+	return deleted
+}
+
+func (al *ArrayList) InsertHead(value string) {
+
+	for i := al.len; i > 0; i-- {
+		al.arr[i] = al.arr[i-1]
+	}
+
+	al.arr[0] = value
+	al.len++
+}
+
+func (al *ArrayList) DeleteMiddle(index int) string {
+	return ""
+}
+
+func (al *ArrayList) InsertMiddle(index int) {
+}
+
+func (al *ArrayList) DeleteTail(index int) string {
+	return ""
+}
+
+func (al *ArrayList) InsertTail(index int) {
+}
